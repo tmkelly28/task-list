@@ -1,4 +1,4 @@
-var button = document.getElementsByTagName("button")[0],
+var button = document.getElementById("addNewTask"),
     taskList = document.getElementById("task-list"),
     taskCount = 0;
 

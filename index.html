@@ -1,26 +1,43 @@
 <!doctype html>
 <html>
   <head>
-    <link href="css/style.css" rel="stylesheet" />
 	<title>Taskr</title>
+    <!-- Include meta tag to ensure proper rendering and touch zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Include jQuery Mobile stylesheets -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <!-- CSS stylesheets -->
+    <link href="css/style.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="header">
-      <div class="container">
-        <h1>Taskr - Task List</h1>
-	  </div>
+
+    <div data-role="page" id="page-main">
+      <div data-role="header" class="header">
+        <div class="container">
+          <h1>Taskr</h1>
+	    </div>
+      </div>
+    
+      <div data-role="main" class="ui-content">
+	    <div class="task-entry">
+	      <div class="ui-field-contain">
+	        <input id="newTask" type="text">
+          </div>
+	      <a class="ui-btn" id="addNewTask">Add Task</a>
+        </div>
+	    <div id="task-list" class="ui-content">
+        </div>
+      </div>
     </div>
-	<div class="entry">
-	  <div class="container">
-	    <input id="newTask" type="text" />
-	    <button id="addNewTask">Add Task</button>
-	  </div>
-    </div>
-	<div id="task-list">
-    </div>
+      
+    <div data-role="footer"></div>
   </body>
 	    
-    <!-- JS -->
+    <!-- Include JavasScript -->
     <script src="js/script.js"></script>
+    <!-- Include the jQuery library -->
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- Include the jQuery Mobile library -->
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	
 </html>
