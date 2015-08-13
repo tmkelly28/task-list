@@ -37,8 +37,7 @@
         <!-- Footer -->
       <div data-role="footer" class="footer">
         <a class="ui-btn ui-btn-inline" id="all-done">Mark All Done</a>
-      </div>
-        
+      </div>  
     </div>
       
       <!-- Done Tasks Page -->
@@ -61,8 +60,14 @@
         <!-- Footer -->
       <div data-role="footer" class="footer">
         <a class="ui-btn ui-btn-inline" id="all-undone">Mark All Undone</a>
+          <a href="#trash-popup" data-rel="popup" class="ui-btn ui-btn-inline" id="trash-all">Move to Trash</a>
       </div>
-        
+        <!-- Trash Popup -->
+      <div data-role="popup" id="trash-popup" class="ui content" data-overlay-theme="b">
+        <h3>Are you sure? This action can't be undone.</h3>
+        <a class="ui-btn ui-btn-inline" id="trash-accept" data-rel="back">Yes</a>
+        <a class="ui-btn ui-btn-inline" id="trash-cancel" data-rel="back">Cancel</a>
+      </div>
     </div>
       
   </body>
