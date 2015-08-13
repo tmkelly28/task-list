@@ -9,5 +9,13 @@ h1 {
 }
 
 .task {
-    
+    color: indianred;
+    position: relative;
+    background-color: lightgray;
+    padding: 1em 1em 1em 1em;
+    margin: 1em 1em 1em 1em;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 1%;
 }

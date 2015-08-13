@@ -7,9 +7,9 @@ function escapeHTML(entry) {
     return entry.replace(/<|>/g, "");
 }
 
-function completeTask() {
+function completeTask(event) {
     "use strict";
-  //to-do
+    taskList.removeChild(event.target);
 }
 
 button.addEventListener("click", function () {
