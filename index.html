@@ -10,29 +10,63 @@
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body>
-
+      
+      <!-- Main Tasks Page -->
     <div data-role="page" id="page-main">
+        <!-- Header -->
       <div data-role="header" class="header">
-        <div class="container">
-          <h1>Taskr</h1>
-	    </div>
+        <h1>Tasks</h1>
+          <div data-role="navbar">
+              <ul>
+                  <li><a href="#page-main" data-icon="bars">Tasks</a></li>
+                  <li><a href="#page-done" data-icon="check">Done</a></li>
+              </ul>
+          </div>
       </div>
-    
+        <!-- Main Content -->
       <div data-role="main" class="ui-content">
 	    <div class="task-entry">
 	      <div class="ui-field-contain">
 	        <input id="newTask" type="text">
           </div>
-	      <a class="ui-btn" id="addNewTask">Add Task</a>
+	      <a class="ui-btn ui-icon-edit ui-btn-icon-left" id="addNewTask">Add Task</a>
         </div>
 	    <div id="task-list" class="ui-content">
         </div>
       </div>
+        <!-- Footer -->
+      <div data-role="footer" class="footer">
+        <a class="ui-btn ui-btn-inline">Mark All Done</a>
+      </div>
+        
     </div>
       
-    <div data-role="footer"></div>
+      <!-- Done Tasks Page -->
+    <div data-role="page" id="page-done">
+        <!-- Header -->
+      <div data-role="header" class="header">
+        <h1>Done</h1>
+          <div data-role="navbar">
+            <ul>
+              <li><a href="#page-main" data-icon="bars">Tasks</a></li>
+                  <li><a href="#page-done" data-icon="check">Done</a></li>
+            </ul>
+          </div>
+      </div>
+        <!-- Main Content -->
+      <div data-role="main" class="ui-content">
+	    <div id="done-task-list" class="ui-content">
+        </div>
+      </div>
+        <!-- Footer -->
+      <div data-role="footer" class="footer">
+        <a class="ui-btn ui-btn-inline">Mark All Undone</a>
+      </div>
+        
+    </div>
+      
   </body>
-	    
+    
     <!-- Include JavasScript -->
     <script src="js/script.js"></script>
     <!-- Include the jQuery library -->

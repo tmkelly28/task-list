@@ -1,17 +1,7 @@
-
-body {
-}
-
-h1 {
-    color: indianred;
-    position: relative;
-    margin-left: 1em;
-}
-
 .task {
-    color: indianred;
+    color: cadetblue;
     position: relative;
-    background-color: lightgray;
+    background-color: floralwhite;
     padding: 1em 1em 1em 1em;
     margin: 1em 1em 1em 1em;
     border-color: gray;
