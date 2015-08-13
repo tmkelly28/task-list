@@ -19,7 +19,7 @@
           <div data-role="navbar">
               <ul>
                   <li><a href="#page-main" data-icon="bars">Tasks</a></li>
-                  <li><a href="#page-done" data-icon="check">Done</a></li>
+                  <li><a href="#page-done" data-icon="check" id="doneMenu">Done</a></li>
               </ul>
           </div>
       </div>
@@ -36,7 +36,7 @@
       </div>
         <!-- Footer -->
       <div data-role="footer" class="footer">
-        <a class="ui-btn ui-btn-inline">Mark All Done</a>
+        <a class="ui-btn ui-btn-inline" id="all-done">Mark All Done</a>
       </div>
         
     </div>
@@ -48,8 +48,8 @@
         <h1>Done</h1>
           <div data-role="navbar">
             <ul>
-              <li><a href="#page-main" data-icon="bars">Tasks</a></li>
-                  <li><a href="#page-done" data-icon="check">Done</a></li>
+              <li><a href="#page-main" data-icon="bars" id="taskMenu">Tasks</a></li>
+              <li><a href="#page-done" data-icon="check">Done</a></li>
             </ul>
           </div>
       </div>
@@ -60,7 +60,7 @@
       </div>
         <!-- Footer -->
       <div data-role="footer" class="footer">
-        <a class="ui-btn ui-btn-inline">Mark All Undone</a>
+        <a class="ui-btn ui-btn-inline" id="all-undone">Mark All Undone</a>
       </div>
         
     </div>
