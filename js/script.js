@@ -5,9 +5,9 @@ var addNewTaskButton = document.getElementById("addNewTask"),
     allDoneButton = document.getElementById("all-done"),
     allUndoneButton = document.getElementById("all-undone"),
     trashAllButton = document.getElementById("trash-accept"),
-    taskList = document.getElementById("task-list"),
+    activeList = document.getElementById("task-list"),
     doneList = document.getElementById("done-task-list"),
-    whereAmI = "tasks", //using whereAmI is not a good solution. Todo: replace it
+    allTasks = [],
     taskCount = 0;
 
 // helper functions
@@ -18,78 +18,75 @@ function escapeHTML(entry) {
 
 function toggleTask(event) {
     "use strict";
-    if (whereAmI === "tasks") {
-        for (var i = 0; i < taskPage.tasks.length; i++) {
-            if (Number(event.srcElement.id) === taskPage.tasks[i].id) {
-            taskPage.tasks[i].currentPage = doneList;
-            donePage.tasks.push(taskPage.tasks[i]);
-            taskPage.tasks.splice(i, 1);
-            taskPage.drawTasks(taskPage.tasks);
+    var list = activeList;
+    for (var i = 0; i < allTasks.length; i++) {
+        if (Number(event.srcElement.id) === allTasks[i].id) {
+            if (allTasks[i].activeStatus === true) {
+                allTasks[i].activeStatus = false;
+            } else {
+                list = doneList;
+                allTasks[i].activeStatus = true;
             }
-        }
-    } else if (whereAmI === "done") {
-        for (var i = 0; i < donePage.tasks.length; i++) {
-            if (Number(event.srcElement.id) === donePage.tasks[i].id) {
-            donePage.tasks[i].currentPage = taskList;
-            taskPage.tasks.push(donePage.tasks[i]);
-            donePage.tasks.splice(i, 1);
-            donePage.drawTasks(donePage.tasks);
-            }
+            drawTasks(allTasks, list);
         }
     }
 }
-
-function toggleAll() {
+ 
+function toggleAll(event) {  
     "use strict";
-    if (whereAmI === "tasks") {
-        for (var i = 0; i < taskPage.tasks.length; i++) {
-            taskPage.tasks[i].currentPage = doneList;
-            donePage.tasks.push(taskPage.tasks[i]);
+    if (event.srcElement.id === "all-done") {
+        for (var i = 0; i < allTasks.length; i++) {
+            if (allTasks[i].activeStatus === true) {
+                allTasks[i].activeStatus = false;
+            }
         }
-    taskPage.tasks = [];
-    taskPage.drawTasks(taskPage.tasks);
-    } else if (whereAmI === "done") {
-        for (var i = 0; i < donePage.tasks.length; i++) {
-            donePage.tasks[i].currentPage = taskList;
-            taskPage.tasks.push(donePage.tasks[i]);
+        drawTasks(allTasks, activeList);
+    } else if (event.srcElement.id === "all-undone") {
+        for (var i = 0; i < allTasks.length; i++) {
+            if (allTasks[i].activeStatus === false) {
+                allTasks[i].activeStatus = true;
+            }
         }
-    donePage.tasks = [];
-    donePage.drawTasks(donePage.tasks);
+        drawTasks(allTasks, doneList);
     }
 }
 
-/* Task constructor
-*/
+function drawTasks(tasks, list) {
+    "use strict";
+    list.innerHTML = "";
+    for (var i = 0; i < tasks.length; i++) {
+        if (list === activeList) {
+            if (tasks[i].activeStatus === true) {
+                tasks[i].drawSelf(tasks[i].content);
+            }
+        } else if (list === doneList) {
+            if (tasks[i].activeStatus === false) {
+                tasks[i].drawSelf(tasks[i].content);
+            }
+        }
+    }
+}
+
+// Task constructor
 function Task(content) {
     "use strict";
     this.content = content;
     this.id = taskCount;
-    this.currentPage = taskList;
+    this.activeStatus = true;
 }
 Task.prototype.drawSelf = function (content) {
     "use strict";
     var taskElement = document.createElement("div"),
-        taskContent = document.createTextNode(content);
+        taskContent = document.createTextNode(content),
+        list = activeList;
     taskElement.appendChild(taskContent);
-    this.currentPage.appendChild(taskElement);
-    this.currentPage.lastChild.id = this.id.toString();
-    this.currentPage.lastChild.className = "task";
-    this.currentPage.lastChild.addEventListener("click", toggleTask);
-};
-
-/* Page constructor
-*/
-function Page(pageType) {
-    "use strict";
-    this.tasks = [];
-    this.pageType = pageType;
-}
-Page.prototype.drawTasks = function (tasks) {
-    "use strict";
-    this.pageType.innerHTML = "";
-    for (var i = 0; i < tasks.length; i++) {
-      tasks[i].drawSelf(tasks[i].content);
-  }
+    if (this.activeStatus !== true) {
+        list = doneList;
+    }
+    list.appendChild(taskElement);
+    list.lastChild.id = this.id.toString();
+    list.lastChild.className = "task";
+    list.lastChild.addEventListener("click", toggleTask);
 };
 
 // Add New Task button
@@ -99,23 +96,21 @@ addNewTaskButton.addEventListener("click", function () {
     taskCount += 1;
     var newTaskContent = escapeHTML(document.getElementById("newTask").value),
         newTask = new Task(newTaskContent);
-    taskPage.tasks.push(newTask);
-    taskPage.drawTasks(taskPage.tasks);
+    allTasks.push(newTask);
+    drawTasks(allTasks, activeList);
     document.getElementById("newTask").value = "";
 });
 
 // Done Menu button
 doneMenuButton.addEventListener("click", function () {
     "use strict";
-    whereAmI = "done";
-    donePage.drawTasks(donePage.tasks);
+    drawTasks(allTasks, doneList);
 });
             
 // Task Menu button
 taskMenuButton.addEventListener("click", function () {
     "use strict";
-    whereAmI = "tasks";
-    taskPage.drawTasks(taskPage.tasks);
+    drawTasks(allTasks, activeList);
 });
 
 // Mark All Done button
@@ -126,10 +121,14 @@ allUndoneButton.addEventListener("click", toggleAll);
 
 // Trash All button
 trashAllButton.addEventListener("click", function () {
-    donePage.tasks = [];
-    donePage.drawTasks(donePage.tasks);
+    var trashIndexes = [];
+    for (var i = 0; i < allTasks.length; i++) {
+        if (allTasks[i].activeStatus === false) {
+            trashIndexes.push(i);
+        }
+    }
+    for (var i = trashIndexes.length - 1; i >= 0; i--) {
+        allTasks.splice(trashIndexes[i], 1);
+    }
+    doneList.innerHTML = "";
 });
-
-// Initialize page objects
-var taskPage = new Page(taskList);
-var donePage = new Page(doneList);
