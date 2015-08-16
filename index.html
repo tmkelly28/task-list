@@ -31,13 +31,35 @@
           </div>
 	      <a class="ui-btn ui-icon-edit ui-btn-icon-left" id="addNewTask">Add Task</a>
         </div>
-	    <div id="task-list" class="ui-content">
+	    <div class="ui-content">
+            <ul data-role="listview" id="task-list" data-inset="true">
+                <!-- Active Tasks Go Here -->
+            </ul>
         </div>
       </div>
         <!-- Footer -->
       <div data-role="footer" class="footer">
         <a class="ui-btn ui-btn-inline" id="all-done">Mark All Done</a>
       </div>  
+        <!-- Action Popup -->
+      <div data-role="popup" id="action-popup" class="ui-content" data-overlay-theme="b">
+          <h3>What do you want to do?</h3>
+        <a href="#edit-page" class="ui-btn ui-btn-inline" id="edit-task">Edit Task</a>
+        <a class="ui-btn ui-btn-inline" id="edit-cancel" data-rel="back">Cancel</a>
+      </div>
+        
+    </div>
+    
+      <!-- Edit Dialog -->
+    <div data-role="page" data-dialog="true" id="edit-page">
+        <div data-role="main" class="ui-content">
+            <h3>Enter the edit below</h3>
+            <div class="ui-field-contain">
+	           <input id="editTask" type="text">
+            </div>
+            <a class="ui-btn ui-btn-inline" id="edit-accept" data-rel="back">Confirm</a>
+            <a class="ui-btn ui-btn-inline" id="edit-cancel" data-rel="back">Cancel</a>
+        </div>
     </div>
       
       <!-- Done Tasks Page -->
@@ -54,7 +76,10 @@
       </div>
         <!-- Main Content -->
       <div data-role="main" class="ui-content">
-	    <div id="done-task-list" class="ui-content">
+	    <div class="ui-content">
+            <ul data-role="listview" id="done-task-list" data-inset="true">
+                <!-- Done Tasks Go Here -->
+            </ul>
         </div>
       </div>
         <!-- Footer -->
@@ -63,7 +88,7 @@
           <a href="#trash-popup" data-rel="popup" class="ui-btn ui-btn-inline" id="trash-all">Move to Trash</a>
       </div>
         <!-- Trash Popup -->
-      <div data-role="popup" id="trash-popup" class="ui content" data-overlay-theme="b">
+      <div data-role="popup" id="trash-popup" class="ui-content" data-overlay-theme="b">
         <h3>Are you sure? This action can't be undone.</h3>
         <a class="ui-btn ui-btn-inline" id="trash-accept" data-rel="back">Yes</a>
         <a class="ui-btn ui-btn-inline" id="trash-cancel" data-rel="back">Cancel</a>

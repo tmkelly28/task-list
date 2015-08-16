@@ -5,9 +5,13 @@ var addNewTaskButton = document.getElementById("addNewTask"),
     allDoneButton = document.getElementById("all-done"),
     allUndoneButton = document.getElementById("all-undone"),
     trashAllButton = document.getElementById("trash-accept"),
+    editTaskButton = document.getElementById("edit-task"),
+    confirmEditButton = document.getElementById("edit-accept"),
     activeList = document.getElementById("task-list"),
     doneList = document.getElementById("done-task-list"),
     allTasks = [],
+    storedTaskText = "",
+    storedTaskId = 0,
     taskCount = 0;
 
 // helper functions
@@ -67,6 +71,11 @@ function drawTasks(tasks, list) {
     }
 }
 
+function storeTaskData(event) {
+    storedTaskText = event.srcElement.previousSibling.textContent;
+    storedTaskId = Number(event.srcElement.previousSibling.id);
+}
+
 // Task constructor
 function Task(content) {
     "use strict";
@@ -76,17 +85,30 @@ function Task(content) {
 }
 Task.prototype.drawSelf = function (content) {
     "use strict";
-    var taskElement = document.createElement("div"),
+    var liEl = document.createElement("li"),
+        taskEl = document.createElement("a"),
+        btnEl = document.createElement("a"),
         taskContent = document.createTextNode(content),
         list = activeList;
-    taskElement.appendChild(taskContent);
+    
+    taskEl.href = "#";
+    taskEl.className = "ui-btn";
+    taskEl.id = this.id.toString();
+    taskEl.appendChild(taskContent);
+    
+    btnEl.href = "#action-popup";
+    btnEl.className = "ui-btn ui-btn-icon-notext ui-icon-gear";
+    btnEl.setAttribute("data-rel", "popup");
+    btnEl.addEventListener("click", storeTaskData);
+    
+    liEl.appendChild(taskEl);
+    liEl.appendChild(btnEl);
+    liEl.className = "ui-li-has-alt ui-li-has-thumb";
+    liEl.addEventListener("click", toggleTask);
     if (this.activeStatus !== true) {
         list = doneList;
     }
-    list.appendChild(taskElement);
-    list.lastChild.id = this.id.toString();
-    list.lastChild.className = "task";
-    list.lastChild.addEventListener("click", toggleTask);
+    list.appendChild(liEl);
 };
 
 // Add New Task button
@@ -131,4 +153,24 @@ trashAllButton.addEventListener("click", function () {
         allTasks.splice(trashIndexes[i], 1);
     }
     doneList.innerHTML = "";
+});
+
+// Initiate Edit button
+editTaskButton.addEventListener("click", function (event) {
+    "use strict";
+    var originalTask = storedTaskText;
+    document.getElementById("editTask").value = originalTask;
+});
+
+// Confirm Edit button
+confirmEditButton.addEventListener("click", function () {
+    "use strict";
+    if (document.getElementById("editTask").value === "") { return; }
+    var newTaskContent = escapeHTML(document.getElementById("editTask").value);
+    for (var i = 0; i < allTasks.length; i++) {
+        if (allTasks[i].id === storedTaskId) {
+            allTasks[i].content = newTaskContent;
+        }
+    }
+    drawTasks(allTasks, activeList);
 });
